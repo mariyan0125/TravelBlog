@@ -56,7 +56,7 @@ namespace MyTravelCMS.Controllers
 
         public ActionResult Edit(int? id)
         {
-            //compound view that holds the data to display tip edit         
+            //compound view         
             TipEdit tipEdit = new TipEdit();
             tipEdit.Tip = db.Tips.Find(id);
             tipEdit.Countries = db.Countries.ToList();
