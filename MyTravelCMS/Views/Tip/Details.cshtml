@@ -1,0 +1,39 @@
+﻿@model MyTravelCMS.Models.Tip
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2 style="font-family: 'Pacifico', cursive;">@Model.TipTitle</h2>
+
+<div class="btn btn-default pull-right">
+    @Html.ActionLink("Edit", "Edit/" + Model.TipID)
+</div>
+<div class="btn btn-default pull-right">
+    @Html.ActionLink("Delete", "Delete/" + Model.TipID)
+</div>
+<div>
+    <div>
+        <span>
+            Country: @Html.ActionLink(Model.Country.CountryName, "Details/" + Model.Country.CountryID, "Country")
+        </span>
+    </div>
+    <div>
+        <span>
+            By: @Html.ActionLink(Model.Traveller.TravellerName, "Details/" + Model.Traveller.TravellerID, "Traveller")
+        </span>
+    </div>
+    <div class="image">
+        @if (Model.HasImg == 1)
+        {
+            <div class="image">
+                <img src="~/images/UploadedFiles/@(Model.TipID).@(Model.ImgType)" />
+            </div>
+        }
+        
+    </div>
+
+    <div class="showlist" style="margin:0 auto; width:950px;">
+        <br />
+        <p>@Model.TipContent</p>
+    </div>
+</div>

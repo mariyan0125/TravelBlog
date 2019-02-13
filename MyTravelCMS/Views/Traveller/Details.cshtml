@@ -1,0 +1,28 @@
+﻿@model MyTravelCMS.Models.Traveller
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2  style="font-family: 'Pacifico', cursive;">@Model.TravellerName</h2>
+<p>@Model.TravellerBio</p>
+<div class="btn btn-default pull-right">
+    @Html.ActionLink("Edit the Traveller", "Edit/" + Model.TravellerID, "Traveller")
+</div>
+
+<div class="btn btn-default pull-right">
+    @Html.ActionLink("Delete the Traveller", "Delete/" + Model.TravellerID, "Traveller")
+</div>
+<div>
+    <h3>List of tips</h3>
+    <div>
+        @foreach (var tip in Model.Tips)
+        {
+        <div>
+            @Html.ActionLink(tip.TipTitle, "Details/" + tip.TipID, "Tip")
+        </div>
+            }
+    </div>
+</div>
+
+

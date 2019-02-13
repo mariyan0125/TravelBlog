@@ -22,3 +22,11 @@ select,
 textarea {
     max-width: 280px;
 }
+h1 {
+    color: #b32d00;
+}
+.jumbotron {
+    height: 30em;
+    background: url(../images/jumbo-03.jpeg) no-repeat 0 -200px;
+    /*background: url(../images/jumbo-1.jpg) no-repeat 0 -100px; */
+}

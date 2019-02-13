@@ -1,0 +1,19 @@
+﻿@model MyTravelCMS.Models.Traveller
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+<form action="/Traveller/Edit/@Model.TravellerID" method="post">
+    <div class="form-group">
+        <label>Name:</label>
+        <input type="text" name="travellerName" value="@Model.TravellerName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Bio:</label>
+        <textarea name="travellerBio" class="form-control">@Model.TravellerBio</textarea>
+    </div>
+    <input type="submit" name="submitBtn" />
+</form>

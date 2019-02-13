@@ -1,0 +1,18 @@
+﻿@model IEnumerable<MyTravelCMS.Models.Traveller>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>Travellers</h2>
+
+<div class="btn btn-default pull-right">
+    @Html.ActionLink("Add New Traveller", "New", "Traveller")
+</div>
+
+@foreach(var traveller in Model)
+    {
+<div class="showlist" style="font-family: 'Open Sans', sans-serif;">
+    @Html.ActionLink(traveller.TravellerName, "Details/" + traveller.TravellerID, "Traveller")
+</div>
+    }

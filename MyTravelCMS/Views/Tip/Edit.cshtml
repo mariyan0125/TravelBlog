@@ -1,0 +1,68 @@
+﻿@model MyTravelCMS.Models.ViewModels.TipEdit
+    @{
+        ViewBag.Title = "Edit";
+    }
+
+    <h2>Edit "@Model.Tip.TipTitle"</h2>
+
+    <form method="POST" action="/Tip/Edit/@Model.Tip.TipID" enctype="multipart/form-data">
+        <div class="form-group">
+            <label>Title:</label>
+            <input type="text" value="@Model.Tip.TipTitle" id="TipTitle" name="TipTitle" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Country:</label>
+            <select id="TipCountry" name="TipCountry" class="form-control">
+                @foreach (var country in Model.Countries)
+                {
+                    string current = "";
+                    if (country.CountryID == Model.Tip.Country.CountryID)
+                    {
+                        current = "selected";
+                    }
+
+                    <option value="@country.CountryID" @current>@country.CountryName</option>
+                }
+
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Traveller:</label>
+            <select id="TipTraveller" name="TipTraveller" class="form-control">
+                @foreach (var traveller in Model.Travellers)
+                {
+                    string current = "";
+                    if (traveller.TravellerID == Model.Tip.Traveller.TravellerID)
+                    {
+                        current = "selected";
+                    }
+
+                    <option value="@traveller.TravellerID" @current>@traveller.TravellerName</option>
+                }
+
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Content:</label>
+            <textarea id="TipContent" name="TipContent" class="form-control">@Model.Tip.TipContent</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Image:</label>
+
+            <div class="img-container">
+                <img src="~/images/UploadedFiles" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Upload Image:</label>
+
+            <input type="file" name="tipImg" id="tipImg" />
+
+        </div>
+
+        <div>
+            <input type="submit" value="Update" class="btn btn-default" />
+        </div>
+    </form>
