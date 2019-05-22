@@ -9,7 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using MyTravelCMS.Models;
 using MyTravelCMS.Models.ViewModels;
-using System.IO;
+using System.IO; 
 
 namespace MyTravelCMS.Controllers
 {
@@ -23,7 +23,7 @@ namespace MyTravelCMS.Controllers
         }
 
         public ActionResult New()
-        {
+        {//this is to populate dropdown list
             TipEdit tipEditView = new TipEdit();
             tipEditView.Countries = db.Countries.ToList();
             tipEditView.Travellers = db.Travellers.ToList();
@@ -37,12 +37,12 @@ namespace MyTravelCMS.Controllers
             string query = "insert into Tips (TipTitle, TipContent, HasImg, ImgType, Country_CountryID, Traveller_TravellerID ) " +
                 "values (@title,@content, 0, 0, @cid, @tid)";
 
-            SqlParameter[] myparams = new SqlParameter[4];
-            myparams[0] = new SqlParameter("@title", TipTitle_New);
-            myparams[1] = new SqlParameter("@content", TipContent_New);
-            myparams[2] = new SqlParameter("@cid", TipCountry_New);
-            myparams[3] = new SqlParameter("@tid", TipTraveller_New);
-
+            SqlParameter[] myparams = {
+            new SqlParameter("@title", TipTitle_New),
+            new SqlParameter("@content", TipContent_New),
+            new SqlParameter("@cid", TipCountry_New),
+            new SqlParameter("@tid", TipTraveller_New)
+        };
             db.Database.ExecuteSqlCommand(query, myparams);
             return RedirectToAction("List");
         }
@@ -71,7 +71,7 @@ namespace MyTravelCMS.Controllers
             if (tipImg != null || tipImg?.ContentLength > 0)
             {
                 //this part adopted from inclass example 
-                //file extensioncheck taken from https://www.c-sharpcorner.com/article/file-upload-extension-validation-in-asp-net-mvc-and-javascript/
+                
                 var valtypes = new[] { "jpeg", "jpg", "png", "gif" };
                 var extension = Path.GetExtension(tipImg.FileName).Substring(1);
 
@@ -87,11 +87,11 @@ namespace MyTravelCMS.Controllers
                     string ImgType = extension;
 
                     string pictureQuery = "update tips set HasImg=@hasImg, ImgType=@type where tipid=@id";
-                    SqlParameter[] picParams = new SqlParameter[3];
-                    picParams[0] = new SqlParameter("@hasImg", HasImg);
-                    picParams[1] = new SqlParameter("@type", ImgType);
-                    picParams[2] = new SqlParameter("@id", id);
-
+                    SqlParameter[] picParams = {
+                     new SqlParameter("@hasImg", HasImg),
+                     new SqlParameter("@type", ImgType),
+                     new SqlParameter("@id", id)
+                };
                     db.Database.ExecuteSqlCommand(pictureQuery, picParams);
 
                 }
@@ -136,7 +136,8 @@ namespace MyTravelCMS.Controllers
 
         public ActionResult List()
         { 
-            return View(db.Tips.ToList());
+            return View(db.Tips.ToList()); //IEnumerable<Tip> tips = db.Tips.ToList();
+                                           //return View(tips); is the same/ to use it later in view IEnumerable<MyTravelCMS.Models.Tip>to print list of tips
         }
     }
 }

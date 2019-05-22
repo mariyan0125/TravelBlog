@@ -15,7 +15,7 @@ namespace MyTravelCMS.Controllers
     {
         private TravelCMSContext db = new TravelCMSContext();
 
-        // GET: Traveller
+        // GET: Traveller/List
         public ActionResult Index()
         {
             return RedirectToAction("List");
@@ -33,10 +33,10 @@ namespace MyTravelCMS.Controllers
             string query = "insert into Travellers (TravellerName, TravellerBio) " +
                 "values (@name,@bio)";
 
-            SqlParameter[] myparams = new SqlParameter[2];
-            myparams[0] = new SqlParameter("@name", travellerName);
-            myparams[1] = new SqlParameter("@bio", travellerBio);
-
+            SqlParameter[] myparams = {
+             new SqlParameter("@name", travellerName),
+             new SqlParameter("@bio", travellerBio)
+        };
             db.Database.ExecuteSqlCommand(query, myparams);
             return RedirectToAction("List");
         }
@@ -55,11 +55,11 @@ namespace MyTravelCMS.Controllers
 
             }
             string query = "update travellers set TravellerName=@name, TravellerBio=@bio where travellerid=@id";
-            SqlParameter[] myparams = new SqlParameter[3];
-            myparams[0] = new SqlParameter("@name", travellerName);
-            myparams[1] = new SqlParameter("@bio", travellerBio);
-            myparams[2] = new SqlParameter("@id", id);
-
+            SqlParameter[] myparams = {
+             new SqlParameter("@name", travellerName),
+             new SqlParameter("@bio", travellerBio),
+             new SqlParameter("@id", id)
+        };
              db.Database.ExecuteSqlCommand(query, myparams);
 
             return RedirectToAction("Index");
@@ -73,9 +73,14 @@ namespace MyTravelCMS.Controllers
 
         public ActionResult Delete(int id)
         {
-            string query = "delete from travellers where TravellerID = @id";
-            SqlParameter param = new SqlParameter("@id", id);
-            db.Database.ExecuteSqlCommand(query, param);
+            //delete tips associated with the deleted traveller (referential integrity)
+            string query = "delete from tips where Traveller_TravellerID=@id";
+            SqlParameter parameter = new SqlParameter("@id", id);
+            db.Database.ExecuteSqlCommand(query, parameter);
+
+            query = "delete from travellers where TravellerID = @id";
+            parameter = new SqlParameter("@id", id);
+            db.Database.ExecuteSqlCommand(query, parameter);
             
             return RedirectToAction("List");
 

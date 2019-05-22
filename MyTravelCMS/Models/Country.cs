@@ -15,7 +15,7 @@ namespace MyTravelCMS.Models
         public string CountryName { get; set; }
 
         public virtual ICollection<Tip> Tips { get; set; }
-        
+
 
     }
 }
